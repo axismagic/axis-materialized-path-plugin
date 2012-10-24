@@ -19,6 +19,51 @@ class AxisMaterializedPathBehavior extends Behavior
     $queryBuilderModifier,
     $peerBuilderModifier;
 
+  public function modifyTable()
+  {
+    $path = $this->getParameter('path_column');
+
+    if (!$this->getTable()->hasColumn($path))
+    {
+      $this->getTable()->addColumn(array(
+        'name' => $path,
+        'type' => 'VARCHAR',
+        'size' => 255,
+        'index' => 'unique',
+        'required' => true
+      ));
+    }
+
+    $level = $this->getParameter('level_column');
+    if (!$this->getTable()->hasColumn($level))
+    {
+      $this->getTable()->addColumn(array(
+        'name' => $level,
+        'type' => 'INTEGER',
+      ));
+    }
+
+    $crumb = $this->getParameter('crumb_column');
+    if (!$this->getTable()->hasColumn($crumb))
+    {
+      $this->getTable()->addColumn(array(
+        'name' => $crumb,
+        'type' => 'VARCHAR',
+        'required' => true
+      ));
+    }
+
+    $order = $this->getParameter('order_column');
+    if (!$this->getTable()->hasColumn($order))
+    {
+      $this->getTable()->addColumn(array(
+        'name' => $order,
+        'type' => 'INTEGER',
+        'default' => 0
+      ));
+    }
+  }
+
   /**
    * @param string $configKey
    * @return Column
