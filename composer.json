@@ -22,5 +22,9 @@
   "require": {
     "php": ">=5.2.6",
     "composer/installers": "*"
+  },
+
+  "autoload": {
+    "classmap": ["lib"]
   }
 }
